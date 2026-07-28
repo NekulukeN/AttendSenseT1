@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#1976D2"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Face Enrollment"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register your face to use AttendSense"
+            android:textColor="#BBDEFB"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
+
+    <!-- Camera Preview -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- Bottom Controls -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#212121"
+        android:padding="24dp">
+
+        <!-- Instructions -->
+        <TextView
+            android:id="@+id/tvInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Position your face clearly in the frame, then tap Capture"
+            android:textColor="#EEEEEE"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Capture Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCapture"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Capture Photo"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Enroll Button (hidden until photo is captured) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEnroll"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Enroll Face"
+            android:textSize="16sp"
+            android:backgroundTint="#388E3C"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Retake Button (hidden until photo is captured) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRetake"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retake"
+            android:textColor="#FFFFFF"
+            app:strokeColor="#FFFFFF"
+            android:visibility="gone"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+        <!-- Progress -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <!-- Status Message -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</LinearLayout>

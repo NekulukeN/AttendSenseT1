@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AttendSense</string>
+
+    <!-- Login -->
+    <string name="login_title">AttendSense</string>
+    <string name="login_subtitle">Secure Attendance System</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Log In</string>
+
+    <!-- Face Enrollment -->
+    <string name="enrollment_title">Face Enrollment</string>
+    <string name="enrollment_subtitle">Take a clear photo of your face to register</string>
+    <string name="btn_capture">Capture Photo</string>
+    <string name="btn_enroll">Enroll Face</string>
+    <string name="btn_retake">Retake</string>
+
+    <!-- Home -->
+    <string name="home_title">Active Sessions</string>
+    <string name="btn_checkin">Check In</string>
+    <string name="btn_checkout">Check Out</string>
+    <string name="btn_history">My Attendance</string>
+    <string name="btn_logout">Log Out</string>
+
+    <!-- Check In / Out -->
+    <string name="checkin_title">Check In</string>
+    <string name="checkout_title">Check Out</string>
+    <string name="face_instructions">Position your face in the frame and tap Capture</string>
+
+    <!-- Probe -->
+    <string name="probe_title">Attendance Check!</string>
+    <string name="probe_instructions">Perform the action below and tap Respond</string>
+    <string name="btn_respond">Respond Now</string>
+    <string name="probe_alert_channel">Probe Alerts</string>
+    <string name="probe_alert_channel_desc">Random attendance check notifications</string>
+
+    <!-- History -->
+    <string name="history_title">My Attendance</string>
+
+    <!-- Generic -->
+    <string name="loading">Loading…</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="camera_permission_required">Camera permission is required for face recognition.</string>
+</resources>
