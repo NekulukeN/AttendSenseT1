@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <!-- ─── LOGIN ─────────────────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.attendsense.ui.login.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+
+        <!-- Already enrolled → go straight to Home -->
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+
+        <!-- First time → go to Face Enrollment -->
+        <action
+            android:id="@+id/action_login_to_enrollment"
+            app:destination="@id/faceEnrollmentFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- ─── FACE ENROLLMENT ───────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/faceEnrollmentFragment"
+        android:name="com.attendsense.ui.enrollment.FaceEnrollmentFragment"
+        android:label="Enroll Face"
+        tools:layout="@layout/fragment_face_enrollment">
+
+        <action
+            android:id="@+id/action_enrollment_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/faceEnrollmentFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- ─── HOME ──────────────────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.attendsense.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_home_to_checkin"
+            app:destination="@id/checkInFragment" />
+
+        <action
+            android:id="@+id/action_home_to_checkout"
+            app:destination="@id/checkOutFragment" />
+
+        <action
+            android:id="@+id/action_home_to_probe"
+            app:destination="@id/probeFragment" />
+
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/attendanceHistoryFragment" />
+
+        <!-- Logout → back to Login -->
+        <action
+            android:id="@+id/action_home_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- ─── CHECK IN ──────────────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/checkInFragment"
+        android:name="com.attendsense.ui.checkin.CheckInFragment"
+        android:label="Check In"
+        tools:layout="@layout/fragment_checkin">
+
+        <!-- Pass session info from Home to CheckIn -->
+        <argument
+            android:name="sessionId"
+            app:argType="integer" />
+        <argument
+            android:name="sessionName"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_checkin_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- ─── PROBE ─────────────────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/probeFragment"
+        android:name="com.attendsense.ui.probe.ProbeFragment"
+        android:label="Attendance Probe"
+        tools:layout="@layout/fragment_probe">
+
+        <!-- Pass probe details from Home to Probe screen -->
+        <argument
+            android:name="probeId"
+            app:argType="integer" />
+        <argument
+            android:name="probeType"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_probe_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- ─── CHECK OUT ─────────────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.attendsense.ui.checkout.CheckOutFragment"
+        android:label="Check Out"
+        tools:layout="@layout/fragment_checkout">
+
+        <argument
+            android:name="sessionId"
+            app:argType="integer" />
+        <argument
+            android:name="sessionName"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_checkout_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- ─── ATTENDANCE HISTORY ────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/attendanceHistoryFragment"
+        android:name="com.attendsense.ui.history.AttendanceHistoryFragment"
+        android:label="My Attendance"
+        tools:layout="@layout/fragment_history">
+
+        <action
+            android:id="@+id/action_history_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>
