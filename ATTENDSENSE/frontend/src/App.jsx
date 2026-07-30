@@ -6,7 +6,7 @@ import Attendance from "./pages/Attendance";
 import Reports    from "./pages/Reports";
 import Navbar     from "./components/Navbar";
 import Anomalies from "./pages/Anomalies";
-
+import Probes from "./pages/Probes";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -29,6 +29,7 @@ export default function App() {
                   <Route path="/attendance/:sessionId" element={<Attendance />} />
                   <Route path="/reports"   element={<Reports />} />
                   <Route path="/anomalies" element={<Anomalies />} />
+                  <Route path="/probes/:sessionId" element={<Probes />} />
                 </Routes>
               </div>
             </div>

@@ -193,6 +193,26 @@ def check_out(
         "status"         : log.status,
     }
 
+@router.patch("/sessions/{session_id}/slide")
+def update_current_slide(
+    session_id: int,
+    slide_number: int,
+    current_user: User = Depends(get_current_user),
+    db: DBSession = Depends(get_db)
+):
+    """Lecturer updates which slide the lecture is currently on."""
+    session = db.query(ClassSession).filter(ClassSession.id == session_id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found.")
+
+    session.current_slide = slide_number
+    db.commit()
+
+    return {
+        "message"       : "Slide updated ✅",
+        "session_id"    : session.id,
+        "current_slide" : session.current_slide
+    }
 
 # ── End a session (lecturer) ──────────────────────────────────
 @router.post("/sessions/{session_id}/end")
@@ -229,11 +249,12 @@ def get_all_sessions(
     sessions = db.query(ClassSession).order_by(ClassSession.start_time.desc()).all()
     return [
         {
-            "id"        : s.id,
-            "class_name": s.class_name,
-            "status"    : s.status,
-            "start_time": s.start_time,
-            "end_time"  : s.end_time,
+            "id"           : s.id,
+            "class_name"   : s.class_name,
+            "status"       : s.status,
+            "start_time"   : s.start_time,
+            "end_time"     : s.end_time,
+            "current_slide": s.current_slide,   # NEW
         }
         for s in sessions
     ]

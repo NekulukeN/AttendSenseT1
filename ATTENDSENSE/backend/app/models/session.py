@@ -17,5 +17,6 @@ class Session(Base):
     start_time  = Column(DateTime(timezone=True), server_default=func.now())
     end_time    = Column(DateTime(timezone=True), nullable=True)
     status      = Column(Enum(SessionStatus), default=SessionStatus.active)
+    current_slide = Column(Integer, default=1)
 
     lecturer    = relationship("User", backref="sessions")

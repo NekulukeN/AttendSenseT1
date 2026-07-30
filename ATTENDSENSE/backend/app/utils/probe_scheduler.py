@@ -9,7 +9,7 @@ from app.models.attendance_log import AttendanceLog
 from app.models.probe_result import ProbeResult
 from app.models.anomaly_log import AnomalyLog
 
-PROBE_ACTIONS  = ["blink", "smile", "turn_left", "turn_right"]
+PROBE_ACTIONS = ["blink", "smile", "turn_left", "turn_right", "slide_check"]
 PROBE_INTERVAL = 2    # minutes between probe cycles
 PROBE_TIMEOUT  = 2    # minutes student has to respond
 
@@ -52,12 +52,13 @@ def issue_probes():
                     continue
 
                 # Issue new probe with random action
-                action = random.choice(PROBE_ACTIONS)
+                action = random.choice(PROBE_ACTIONS) # PROBE_ACTIONS = ["blink","smile","turn_left","turn_right"]
                 probe  = ProbeResult(
                     user_id    = log.user_id,
                     session_id = session.id,
                     probe_type = action,
                     status     = "pending",
+                    expected_slide = session.current_slide,
                 )
                 db.add(probe)
                 print(f"[PROBE] Issued '{action}' probe to user_id={log.user_id} in session {session.id}")
