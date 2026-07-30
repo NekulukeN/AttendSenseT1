@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionNext"
-                android:textColor="#212121"
+                android:textColor="#000000"
                 android:textColorHint="#000000"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:imeOptions="actionDone"
-                android:textColor="#212121"
+                android:textColor="#000000"
                 android:textColorHint="#000000"/>
         </com.google.android.material.textfield.TextInputLayout>
 
