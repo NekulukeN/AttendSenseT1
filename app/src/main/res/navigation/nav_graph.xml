@@ -25,6 +25,24 @@
             app:destination="@id/faceEnrollmentFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <!-- ─── REGISTER ──────────────────────────────────────────────────────── -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.attendsense.ui.register.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- ─── FACE ENROLLMENT ───────────────────────────────────────────────── -->
@@ -107,6 +125,9 @@
             app:argType="integer" />
         <argument
             android:name="probeType"
+            app:argType="string" />
+        <argument
+            android:name="issuedAt"
             app:argType="string" />
 
         <action

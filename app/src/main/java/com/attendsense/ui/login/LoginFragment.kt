@@ -45,6 +45,9 @@ class LoginFragment : Fragment() {
             if (!validateInputs(email, password)) return@setOnClickListener
             performLogin(email, password)
         }
+        binding.tvGoToRegister.setOnClickListener {
+            findNavController().navigate(R.id.action_login_to_register)
+        }
     }
 
     private fun validateInputs(email: String, password: String): Boolean {

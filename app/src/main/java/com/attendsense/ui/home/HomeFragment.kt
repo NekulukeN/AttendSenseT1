@@ -81,7 +81,8 @@ class HomeFragment : Fragment() {
             pendingProbe?.let { probe ->
                 val action = HomeFragmentDirections.actionHomeToProbe(
                     probeId   = probe.id,
-                    probeType = probe.probeType
+                    probeType = probe.probeType,
+                    issuedAt  = probe.sentTime ?: ""
                 )
                 findNavController().navigate(action)
             }

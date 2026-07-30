@@ -2,6 +2,16 @@
 <resources>
     <string name="app_name">AttendSense</string>
 
+    <!-- Register -->
+    <string name="register_title">Create Account</string>
+    <string name="register_subtitle">Register as a student to get started</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_student_id">Student ID (optional)</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="btn_register">Register</string>
+    <string name="already_have_account">Already have an account? Log in</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+
     <!-- Login -->
     <string name="login_title">AttendSense</string>
     <string name="login_subtitle">Secure Attendance System</string>

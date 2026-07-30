@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#000000">
+    android:background="#000000"
+    android:orientation="vertical">
 
     <!-- Header — orange to signal urgency -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="#E65100"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
@@ -20,45 +19,52 @@
             android:text="⚠️  Attendance Check"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Perform the action below and respond"
             android:textColor="#FFCCBC"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
     </LinearLayout>
 
+    <!-- Action Instruction Card -->
     <!-- Action Instruction Card -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="#1A1A1A"
-        android:padding="24dp"
+        android:padding="12dp"
         android:gravity="center">
 
-        <!-- Action Icon -->
-        <TextView
-            android:id="@+id/tvActionIcon"
+        <!-- Action Icon + Label on same row to save vertical space -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="👁"
-            android:textSize="56sp"
-            android:layout_marginBottom="8dp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <!-- Action Label -->
-        <TextView
-            android:id="@+id/tvActionLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BLINK"
-            android:textColor="#FF6D00"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
+            <TextView
+                android:id="@+id/tvActionIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👁"
+                android:textSize="28sp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvActionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BLINK"
+                android:textColor="#FF6D00"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
         <!-- Action Description -->
         <TextView
@@ -67,18 +73,50 @@
             android:layout_height="wrap_content"
             android:text="Blink your eyes clearly"
             android:textColor="#BDBDBD"
-            android:textSize="14sp"/>
+            android:textSize="12sp"/>
 
-        <!-- Countdown Timer -->
-        <TextView
-            android:id="@+id/tvCountdown"
+        <!-- Countdown + Slide input on same row -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2:00"
-            android:textColor="#FF6D00"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="6dp">
+
+            <TextView
+                android:id="@+id/tvCountdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2:00"
+                android:textColor="#FF6D00"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slide #:"
+                android:textColor="#EEEEEE"
+                android:textSize="12sp"
+                android:layout_marginEnd="6dp"/>
+
+            <EditText
+                android:id="@+id/etSlideNumber"
+                android:layout_width="60dp"
+                android:layout_height="36dp"
+                android:inputType="number"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#757575"
+                android:hint="5"
+                android:background="@android:drawable/edit_text"
+                android:minHeight="0dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -87,45 +125,44 @@
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <!-- Bottom Controls -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="#212121"
+        android:orientation="vertical"
         android:padding="24dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:text="Perform the action, then tap Respond"
             android:textColor="#EEEEEE"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:layout_marginBottom="16dp"/>
+            android:textSize="14sp" />
 
         <!-- Respond Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRespond"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Capture &amp; Respond"
-            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
             android:backgroundTint="#E65100"
-            android:layout_marginBottom="8dp"/>
+            android:text="Capture &amp; Respond"
+            android:textSize="16sp" />
 
         <!-- Back Button -->
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.button.MaterialButton xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/btnBack"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Back"
             android:textColor="#FFFFFF"
-            app:strokeColor="#FFFFFF"
-            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+            app:strokeColor="#FFFFFF" />
 
         <!-- Progress -->
         <ProgressBar
@@ -133,18 +170,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <!-- Result Message -->
         <TextView
             android:id="@+id/tvResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:textStyle="bold"
             android:layout_marginTop="12dp"
-            android:visibility="gone"/>
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
     </LinearLayout>
 

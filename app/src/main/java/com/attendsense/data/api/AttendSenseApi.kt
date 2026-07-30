@@ -2,9 +2,13 @@ package com.attendsense.data.api
 
 import com.attendsense.data.model.AttendanceLogResponse
 import com.attendsense.data.model.FaceStatusResponse
+import com.attendsense.data.model.RegisterRequest
+import com.attendsense.data.model.RegisterResponse
 import com.attendsense.data.model.LoginRequest
 import com.attendsense.data.model.LoginResponse
 import com.attendsense.data.model.MessageResponse
+import okhttp3.RequestBody
+import com.attendsense.data.model.ProbeRespondResult
 import com.attendsense.data.model.PendingProbeResponse
 import com.attendsense.data.model.SessionResponse
 import com.attendsense.data.model.UserResponse
@@ -19,6 +23,11 @@ import retrofit2.http.*
 interface AttendSenseApi {
 
     // ─── AUTH (/auth) ─────────────────────────────────────────────────────────
+
+    @POST("auth/register")
+    suspend fun register(
+        @Body request: RegisterRequest
+    ): Response<RegisterResponse>
 
     @POST("auth/login")
     suspend fun login(
@@ -67,8 +76,9 @@ interface AttendSenseApi {
     @POST("probe/respond/{probe_id}")
     suspend fun respondToProbe(
         @Path("probe_id") probeId: Int,
-        @Part image: MultipartBody.Part
-    ): Response<MessageResponse>
+        @Part image: MultipartBody.Part,
+        @Part("slide_number") slideNumber: RequestBody
+    ): Response<ProbeRespondResult>
 
     // ─── REPORTS (/reports) ───────────────────────────────────────────────────
 

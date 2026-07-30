@@ -4,6 +4,22 @@ import com.google.gson.annotations.SerializedName
 
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
 
+data class RegisterRequest(
+    @SerializedName("student_id") val studentId: String?,
+    @SerializedName("full_name")  val fullName: String,
+    val email: String,
+    val password: String,
+    val role: String = "student"
+)
+
+data class RegisterResponse(
+    val id: Int,
+    @SerializedName("full_name") val fullName: String,
+    val email: String,
+    val role: String,
+    @SerializedName("created_at") val createdAt: String
+)
+
 data class LoginRequest(
     val email: String,
     val password: String
@@ -68,4 +84,13 @@ data class PendingProbeResponse(
 data class MessageResponse(
     val message: String,
     val status: String? = null
+)
+
+data class ProbeRespondResult(
+    @SerializedName("probe_id")      val probeId: Int,
+    val action: String,
+    @SerializedName("camera_passed") val cameraPassed: Boolean,
+    @SerializedName("slide_passed")  val slidePassed: Boolean,
+    val passed: Boolean,
+    val message: String
 )

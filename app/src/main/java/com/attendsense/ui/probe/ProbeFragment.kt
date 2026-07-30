@@ -13,6 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.time.OffsetDateTime
+import java.time.Duration
 import com.attendsense.R
 import com.attendsense.data.api.AttendSenseApi
 import com.attendsense.data.api.RetrofitClient
@@ -65,24 +69,48 @@ class ProbeFragment : Fragment() {
 
         // Capture and respond
         binding.btnRespond.setOnClickListener {
+            val slideText = binding.etSlideNumber.text.toString().trim()
+
+            if (slideText.isEmpty()) {
+                showResult("❌ Please enter the current slide number.", isError = true)
+                return@setOnClickListener
+            }
+
+            val slideNumber = slideText.toIntOrNull()
+            if (slideNumber == null) {
+                showResult("❌ Slide number must be a valid number.", isError = true)
+                return@setOnClickListener
+            }
+
             setLoading(true)
             cameraHelper.capturePhoto(
                 onCaptured = { file ->
                     lifecycleScope.launch {
                         try {
                             val imagePart = cameraHelper.fileToMultipart(file, "file")
-                            val response  = api.respondToProbe(args.probeId, imagePart)
+                            val slideBody = slideNumber.toString()
+                                .toRequestBody("text/plain".toMediaTypeOrNull())
+
+                            val response = api.respondToProbe(args.probeId, imagePart, slideBody)
 
                             requireActivity().runOnUiThread {
                                 setLoading(false)
                                 countDownTimer?.cancel()
 
                                 if (response.isSuccessful) {
-                                    showResult("✅ Probe passed! Attendance confirmed.", isError = false)
+                                    val result = response.body()
+                                    if (result?.passed == true) {
+                                        showResult("✅ Probe passed! Attendance confirmed.", isError = false)
+                                    } else {
+                                        val reasons = mutableListOf<String>()
+                                        if (result?.cameraPassed == false) reasons.add("liveness action failed")
+                                        if (result?.slidePassed == false) reasons.add("wrong slide number")
+                                        showResult("❌ Probe failed — ${reasons.joinToString(", ")}", isError = true)
+                                    }
                                     binding.btnRespond.isEnabled = false
                                     binding.root.postDelayed({
                                         findNavController().navigate(R.id.action_probe_to_home)
-                                    }, 1500)
+                                    }, 1800)
                                 } else {
                                     val error = response.errorBody()?.string()
                                         ?: "Response failed. Try again."
@@ -107,11 +135,6 @@ class ProbeFragment : Fragment() {
                     }
                 }
             )
-        }
-
-        binding.btnBack.setOnClickListener {
-            countDownTimer?.cancel()
-            findNavController().navigateUp()
         }
     }
 
@@ -154,14 +177,41 @@ class ProbeFragment : Fragment() {
      * When it hits 0 the probe has expired on the backend side,
      * so we disable the respond button and go back to Home.
      */
+    /**
+     * Countdown based on the probe's REAL issued_at time from the backend,
+     * not just a fresh local 2:00 every time this screen is opened.
+     * This keeps the on-screen timer honest with the backend's actual expiry.
+     */
     private fun startCountdown() {
-        countDownTimer = object : CountDownTimer(120_000, 1000) {
+        val totalWindowMillis = 120_000L  // matches backend PROBE_TIMEOUT = 2 minutes
+
+        val remainingMillis = try {
+            val issuedAt   = OffsetDateTime.parse(args.issuedAt)
+            val now        = OffsetDateTime.now(issuedAt.offset)
+            val elapsed    = Duration.between(issuedAt, now).toMillis()
+            (totalWindowMillis - elapsed).coerceIn(0L, totalWindowMillis)
+        } catch (e: Exception) {
+            // If parsing fails for any reason, fall back to the full window
+            totalWindowMillis
+        }
+
+        if (remainingMillis <= 0L) {
+            // Probe already expired before this screen even finished loading
+            binding.tvCountdown.text     = "0:00 — Expired"
+            binding.btnRespond.isEnabled = false
+            showResult("⏱ This probe has already expired.", isError = true)
+            binding.root.postDelayed({
+                if (isAdded) findNavController().navigate(R.id.action_probe_to_home)
+            }, 2000)
+            return
+        }
+
+        countDownTimer = object : CountDownTimer(remainingMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / 1000 / 60
                 val seconds = (millisUntilFinished / 1000) % 60
                 binding.tvCountdown.text = String.format("%d:%02d", minutes, seconds)
 
-                // Turn countdown red in last 30 seconds
                 if (millisUntilFinished <= 30_000) {
                     binding.tvCountdown.setTextColor(
                         ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
@@ -170,10 +220,9 @@ class ProbeFragment : Fragment() {
             }
 
             override fun onFinish() {
-                binding.tvCountdown.text         = "0:00 — Expired"
-                binding.btnRespond.isEnabled     = false
+                binding.tvCountdown.text     = "0:00 — Expired"
+                binding.btnRespond.isEnabled = false
                 showResult("⏱ Time's up! This probe has expired.", isError = true)
-                // Return to Home after a moment
                 binding.root.postDelayed({
                     if (isAdded) findNavController().navigate(R.id.action_probe_to_home)
                 }, 2000)
