@@ -249,11 +249,12 @@ def get_all_sessions(
     sessions = db.query(ClassSession).order_by(ClassSession.start_time.desc()).all()
     return [
         {
-            "id"        : s.id,
-            "class_name": s.class_name,
-            "status"    : s.status,
-            "start_time": s.start_time,
-            "end_time"  : s.end_time,
+            "id"           : s.id,
+            "class_name"   : s.class_name,
+            "status"       : s.status,
+            "start_time"   : s.start_time,
+            "end_time"     : s.end_time,
+            "current_slide": s.current_slide,   # NEW
         }
         for s in sessions
     ]

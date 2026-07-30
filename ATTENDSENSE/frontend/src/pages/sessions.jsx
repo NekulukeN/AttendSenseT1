@@ -116,17 +116,23 @@ export default function Sessions() {
                   </td>
                   <td style={{ padding: "0.75rem", display: "flex", gap: "0.5rem" }}>
                     <button onClick={() => navigate(`/attendance/${s.id}`)} style={{
-                      padding: "0.4rem 0.75rem", background: "#0ea5e9",
-                      color: "white", border: "none", borderRadius: "6px", cursor: "pointer"
-                    }}>
-                      View
-                    </button>
-                    {s.status === "active" && (
-                      <button onClick={() => endSession(s.id)} style={{
-                        padding: "0.4rem 0.75rem", background: "#ef4444",
+                        padding: "0.4rem 0.75rem", background: "#0ea5e9",
                         color: "white", border: "none", borderRadius: "6px", cursor: "pointer"
                       }}>
-                        End
+                        View
+                    </button>
+                    <button onClick={() => navigate(`/probes/${s.id}`)} style={{
+                      padding: "0.4rem 0.75rem", background: "#E65100",
+                      color: "white", border: "none", borderRadius: "6px", cursor: "pointer"
+                    }}>
+                      Probes
+                      </button>
+                      {s.status === "active" && (
+                        <button onClick={() => endSession(s.id)} style={{
+                          padding: "0.4rem 0.75rem", background: "#ef4444",
+                          color: "white", border: "none", borderRadius: "6px", cursor: "pointer"
+                        }}>
+                          End
                       </button>
                     )}
                   </td>
