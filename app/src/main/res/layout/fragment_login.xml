@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -51,6 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_email"
+            android:textColorHint="#000000"
+            app:hintTextColor="#000000"
+            app:boxStrokeColor="@color/box_stroke_color"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -59,8 +63,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionNext"
-                android:textColor="#000000"
-                android:textColorHint="#000000"/>
+                android:textColor="#000000"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Field -->
@@ -70,9 +73,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_password"
+            android:textColorHint="#000000"
+            app:hintTextColor="#000000"
+            app:boxStrokeColor="@color/box_stroke_color"
             android:layout_marginBottom="32dp"
-            app:passwordToggleEnabled="true"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -80,8 +85,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:imeOptions="actionDone"
-                android:textColor="#000000"
-                android:textColorHint="#000000"/>
+                android:textColor="#000000"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Register Button -->
